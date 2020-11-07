@@ -17,6 +17,7 @@ AS=nasm
 .PHONY: all clean run iso
 
 all:
+	mkdir -p build/iso
 	$(AS) -f bin $(bootloader_asm_files) -o $(bootloader)
 	$(AS) -f bin $(kernel_asm_files) -o $(kernel)
 	cp $(bootloader) $(os)
@@ -32,6 +33,7 @@ run_iso: $(os_iso)
 	$(qemu) -cdrom $(os_iso)
 
 iso:
+	mkdir -p build/iso
 	cp $(os) $(os_truncated)
 	truncate -s 1200k $(os_truncated)
 	cp $(os_truncated) build/iso/boot.bin
